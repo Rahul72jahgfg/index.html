@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Friendship Day Special</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(to right, #a18cd1, #fbc2eb);
+      overflow-x: hidden;
+    }
+    nav {
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      flex-wrap: wrap;
+    }
+    nav h2 {
+      color: #7e3ff2;
+      font-size: 1.4rem;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    nav ul li {
+      cursor: pointer;
+      font-weight: bold;
+      color: #7e3ff2;
+      transition: 0.3s;
+    }
+    nav ul li:hover { color: #e91e63; }
+
+    .typewriter {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      margin: 20px;
+      text-shadow: 2px 2px 8px #7e3ff2;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid white;
+      width: 0;
+      animation: typing 4s steps(30, end) forwards, blink 0.6s step-end infinite;
+    }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink { 50% { border-color: transparent } }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 20px;
+    }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .card, .message-box, .simran-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+      width: 90%;
+      max-width: 320px;
+      text-align: center;
+    }
+    .card img, .simran-card img {
+      width: 50%;
+      max-width: 150px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      border: 4px solid #7e3ff2;
+    }
+    .btn {
+      margin-top: 10px;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 25px;
+      background: #7e3ff2;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover { background: #5b21b6; }
+
+    /* ✅ Stylish Simran Card */
+    .simran-card {
+      position: relative;
+      overflow: hidden;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+    }
+    .simran-card .highlight {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #fbc2eb, #a18cd1);
+      z-index: -1;
+      filter: blur(30px);
+      opacity: 0.6;
+      animation: glowMove 3s infinite alternate;
+    }
+    @keyframes glowMove {
+      from { transform: scale(1); opacity: 0.6; }
+      to { transform: scale(1.1); opacity: 0.8; }
+    }
+    .simran-card .badge {
+      display: inline-block;
+      background: linear-gradient(to right, #a18cd1, #fbc2eb);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    .simran-card:hover { transform: scale(1.05); }
+
+    .message-box {
+      color: #444;
+      border-left: 6px solid #7e3ff2;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    /* Popup */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(3px);
+      z-index: 100;
+      padding: 10px;
+    }
+    .popup-card {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 90%;
+      animation: popIn 0.4s ease-out;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+    .popup-card h2 { color: #7e3ff2; margin-bottom: 10px; font-size: 1.2rem; }
+    .popup-card p { color: #444; line-height: 1.4; font-size: 0.95rem; }
+    .popup-card button {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: #7e3ff2;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Gallery */
+    .gallery {
+      width: 90%;
+      max-width: 320px;
+      position: relative;
+      margin: 30px auto;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .gallery button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      font-size: 20px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* Music Button */
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #7e3ff2;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp 6s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-700px); opacity: 0; }
+    }
+
+    @media (max-width: 500px) {
+      .typewriter { font-size: 1.3rem; }
+      nav h2 { font-size: 1.1rem; }
+      nav ul { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2>Friendship Day</h2>
+    <ul><li onclick="openAbout()">About Simran</li></ul>
+  </nav>
+
+  <h1 class="typewriter">Happy Friendship Day Simran ❤️</h1>
+
+  <div class="container">
+    <div class="row">
+      <div class="simran-card">
+        <div class="highlight"></div>
+        <img src="30.jpg" />
+        <h2>Simran</h2>
+        <span class="badge">Best Friend ❤️</span>
+        <p>You are the best part of my life! 🫶</p>
+        <button class="btn" onclick="openPopup()">Click for Surprise 🎁</button>
+      </div>
+
+      <div class="message-box">
+        🌸 <b>Simran</b>, Aur kuttiya sab badiya Happy friendship day aur  vese 
+        yhi bolunga hamesa khush rhna haste rhna kabhi rone ka maan ho mujhe batana sath m royenge heeee.
+        <br>
+        <br>
+        ~Rahul Shakya
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="rrr.jpg" />
+      <h2>Rahul Shakya</h2>
+      <p>Always there for my best friend, my bestie ,Simran ❤️</p>
+    </div>
+
+    <div class="gallery">
+      <img id="gallery-img" src="25.jpg">
+      <button class="prev" onclick="prevImg()">❮</button>
+      <button class="next" onclick="nextImg()">❯</button>
+    </div>
+  </div>
+
+  <!-- Popups -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-card">
+      <h2>🎉 Happy Friendship Day Simran! 🎉</h2>
+      <p>From <b>Rahul Shakya</b> ❤️ Thank you for being my best friend forever!</p>
+      <button onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="about">
+    <div class="popup-card">
+      <h2>About Simran 💖</h2>
+      <p>Simran has a pure heart but is often moody and talks only to people she knows well.  
+      She is so kind that finding a girl like her is truly rare ❤️</p>
+      <button onclick="closeAbout()">Close</button>
+    </div>
+  </div>
+
+  <button class="music-btn" onclick="toggleMusic()">🎵 Play Music</button>
+  <audio id="bg-music" src="musi.mp3"></audio>
+
+  <script>
+    const emojis = ["🎈", "⭐", "🎂", "🌸", "💫", "🎉"];
+    setInterval(() => {
+      const emoji = document.createElement("div");
+      emoji.classList.add("emoji");
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * 100 + "vw";
+      emoji.style.animationDuration = 3 + Math.random() * 3 + "s";
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 6000);
+    }, 300);
+
+    function openPopup() { document.getElementById("popup").style.display = "flex"; }
+    function closePopup() { document.getElementById("popup").style.display = "none"; }
+    function openAbout() { document.getElementById("about").style.display = "flex"; }
+    function closeAbout() { document.getElementById("about").style.display = "none"; }
+
+    let isPlaying = false;
+    function toggleMusic() {
+      const music = document.getElementById("bg-music");
+      const btn = document.querySelector(".music-btn");
+      if (!isPlaying) { music.play(); btn.textContent = "⏸ Pause Music"; }
+      else { music.pause(); btn.textContent = "🎵 Play Music"; }
+      isPlaying = !isPlaying;
+    }
+
+    const images = [
+      "26.jpg",
+      "27.jpg",
+      "28.jpg",
+      "29.jpg"
+    ];
+    let index = 0;
+    function showImg(i) { document.getElementById("gallery-img").src = images[i]; }
+    function nextImg() { index = (index + 1) % images.length; showImg(index); }
+    function prevImg() { index = (index - 1 + images.length) % images.length; showImg(index); }
+  </script>
+</body>
+</html>
